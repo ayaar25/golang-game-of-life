@@ -83,3 +83,20 @@ func (board *Board) GenerateNextGenerationOfAliveCells() {
 
 	board.hashOfAliveCells = newHashOfAliveCells
 }
+
+func (board *Board) RenewBorders() {
+	for cell, _ := range board.hashOfAliveCells {
+		if cell.X + 1 > board.maxBorder.X {
+			board.maxBorder.X = cell.X + 1
+		}
+		if cell.X < board.minBorder.X {
+			board.minBorder.X = cell.X
+		}
+		if cell.Y + 1 > board.maxBorder.Y {
+			board.maxBorder.Y = cell.Y + 1
+		}
+		if cell.Y < board.minBorder.Y {
+			board.minBorder.Y = cell.Y
+		}
+	}
+}

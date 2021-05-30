@@ -147,3 +147,22 @@ func TestGivenHashOfAliveCellsGenerateNextGenerationOfAliveCellsReturnNextGenera
 	
 	assert.Equal(t, expectedResult, board.hashOfAliveCells)	
 }
+
+func TestGivenBorderRenewBorderUpdatesBorder( t *testing.T ) {
+	hashOfAliveCells := map[io.Position]int {
+		io.Position{X: 0, Y: 1}: 0,
+		io.Position{X: 1, Y: 1}: 0,
+		io.Position{X: 2, Y: 1}: 0,
+	}
+	minBorder := io.Position{X: 0, Y: 0}
+	maxBorder := io.Position{X: 1, Y: 1}
+	expectedMinBorder := io.Position{X: 0, Y: 0}
+	expectedMaxBorder := io.Position{X: 3, Y: 2}
+
+	board := Board{hashOfAliveCells, minBorder, maxBorder}
+
+	board.RenewBorders()
+
+	assert.Equal(t, expectedMinBorder, board.minBorder)
+	assert.Equal(t, expectedMaxBorder, board.maxBorder)
+}
