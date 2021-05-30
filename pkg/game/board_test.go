@@ -30,3 +30,22 @@ func TestGivenHashOfAliveCellsGenerateHashOfAliveCellsAndItsNeighboursGeneratesN
 	
 	assert.Equal(t, expectedResult, result)
 }
+
+func TestGivenHashOfCellsCountAliveNeighboursEachCellReturnHashOfCellsWithNumberOfAliveNeighbours( t *testing.T ) {
+	hashOfAliveCells := map[io.Position]int {
+		io.Position{X: 1, Y: 1}: 0,
+		io.Position{X: 2, Y: 1}: 0,
+	}
+	minBorder := io.Position{X: 0, Y: 0}
+	maxBorder := io.Position{X: 3, Y: 3}
+	expectedResult := map[io.Position]int {
+		io.Position{X: 1, Y: 1}: 1,
+		io.Position{X: 2, Y: 1}: 1,
+	}
+
+	board := Board{hashOfAliveCells, minBorder, maxBorder}
+	
+	result := board.CountAliveNeighboursEachCell(hashOfAliveCells)
+	
+	assert.Equal(t, expectedResult, result)	
+}

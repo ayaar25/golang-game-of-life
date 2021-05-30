@@ -24,14 +24,34 @@ var NeighboursPositions = map[string]io.Position {
 func (board *Board) GenerateHashOfAliveCellsAndItsNeighbours() map[io.Position]int {
 	result := make(map[io.Position]int)
 
-	for aliveCell, numberOfNeighbours := range board.hashOfAliveCells {
-		result[aliveCell] = numberOfNeighbours
+	for aliveCell, numberOfAliveNeighbours := range board.hashOfAliveCells {
+		result[aliveCell] = numberOfAliveNeighbours
 		for _, neighbourPosition := range NeighboursPositions {
 			x := aliveCell.X + neighbourPosition.X
 			y := aliveCell.Y + neighbourPosition.Y
 			
 			result[io.Position{X: x, Y: y}] = 0
 		}
+	}
+
+	return result
+}
+
+func (board *Board) CountAliveNeighboursEachCell(hashOfCells map[io.Position]int) map[io.Position]int {
+	result := make(map[io.Position]int)
+
+	for cell, numberOfAliveNeighbours := range hashOfCells {
+		totalAliveNeighbours := numberOfAliveNeighbours
+		for _, neighbourPosition := range NeighboursPositions {
+			x := cell.X + neighbourPosition.X
+			y := cell.Y + neighbourPosition.Y
+
+			if _, keyExists := board.hashOfAliveCells[io.Position{X: x, Y: y}]; keyExists {
+				totalAliveNeighbours += 1
+			}
+		}
+
+		result[cell] = totalAliveNeighbours
 	}
 
 	return result
