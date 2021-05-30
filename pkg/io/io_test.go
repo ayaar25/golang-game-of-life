@@ -6,11 +6,15 @@ import (
 )
 
 func TestGivenAPatternFileReadPatternReturnsHashOfAliveCells( t *testing.T ) {
-	expectedResult := map[Position]int {
+	expectedResultHashOfAliveCells := map[Position]int {
 		Position { X:1, Y:1 }: 0,
 	}
+	expectedResultMinBorder := Position{X: 0, Y: 0}
+	expectedResultMaxBorder := Position{X: 3, Y: 3}
 	pathFile := "../../patterns/test_pattern.txt"
-	result := ReadPattern(pathFile)
+	resultHashOfAliveCells, resultMinBorder, resultMaxBorder := ReadPattern(pathFile)
 
-	assert.Equal(t, expectedResult, result)
+	assert.Equal(t, expectedResultHashOfAliveCells, resultHashOfAliveCells)
+	assert.Equal(t, expectedResultMinBorder, resultMinBorder)
+	assert.Equal(t, expectedResultMaxBorder, resultMaxBorder)
 }
