@@ -61,7 +61,7 @@ func (board *Board) IsCellAliveInNextGeneration(cell io.Position, numberOfAliveN
 	var result bool
 
 	if _, keyExists := board.hashOfAliveCells[cell]; keyExists {
-		result = numberOfAliveNeighbours == 2
+		result = numberOfAliveNeighbours == 2 || numberOfAliveNeighbours == 3
 	}
 
 	return result

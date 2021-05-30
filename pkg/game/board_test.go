@@ -86,3 +86,23 @@ func TestGivenACellAndItsNumberOfAliveNeighboursIsTwoIsCellAliveInNextGeneration
 	
 	assert.True(t, result)
 }
+
+func TestGivenACellAndItsNumberOfAliveNeighboursIsThreeIsCellAliveInNextGenerationReturnTrue( t *testing.T ) {
+	hashOfAliveCells := map[io.Position]int {
+		io.Position{X: 0, Y: 0}: 1,
+		io.Position{X: 0, Y: 1}: 3,
+		io.Position{X: 1, Y: 1}: 1,
+		io.Position{X: 0, Y: 2}: 1,
+	}
+	minBorder := io.Position{X: 0, Y: 0}
+	maxBorder := io.Position{X: 3, Y: 3}
+
+	board := Board{hashOfAliveCells, minBorder, maxBorder}
+
+	cell := io.Position{X: 0, Y: 1}
+	numberOfAliveNeighbours := board.hashOfAliveCells[cell]
+
+	result := board.IsCellAliveInNextGeneration(cell, numberOfAliveNeighbours)
+	
+	assert.True(t, result)
+}
