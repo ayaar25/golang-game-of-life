@@ -68,3 +68,18 @@ func (board *Board) IsCellAliveInNextGeneration(cell io.Position, numberOfAliveN
 
 	return result
 }
+
+func (board *Board) GenerateNextGenerationOfAliveCells() {
+	newHashOfAliveCells := make(map[io.Position]int)
+
+	hashOfAliveCellsAndItsNeighbours := board.GenerateHashOfAliveCellsAndItsNeighbours()
+	hashOfAliveCellsAndItsNeighbours = board.CountAliveNeighboursEachCell(hashOfAliveCellsAndItsNeighbours)
+
+	for cell, numberOfAliveNeighbours := range hashOfAliveCellsAndItsNeighbours {
+		if board.IsCellAliveInNextGeneration(cell, numberOfAliveNeighbours) {
+			newHashOfAliveCells[cell] = 0
+		}
+	}
+
+	board.hashOfAliveCells = newHashOfAliveCells
+}
