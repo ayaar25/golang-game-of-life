@@ -4,6 +4,8 @@ import (
 	"os"
 	"bufio"
 	"log"
+	"strings"
+	"fmt"
 )
 
 type Position struct {
@@ -45,4 +47,25 @@ func ReadPattern(filePath string) (map[Position]int, Position, Position) {
 	checkError(scanner.Err())
 
 	return result, Position{X: 0, Y: 0}, Position{X: maxRow, Y: maxCol}
+}
+
+func PrintBoard(hashOfAliveCells map[Position]int, minBorder Position, maxBorder Position) string {
+	var printResult strings.Builder
+
+	for row := minBorder.X; row < maxBorder.X; row++ {
+		for col := minBorder.Y; col < maxBorder.Y; col++ {
+			if _, keyExists := hashOfAliveCells[Position{X: row, Y: col}]; keyExists {
+				printResult.WriteString("X")
+			} else {
+				printResult.WriteString("-")
+			}
+			
+			if col == maxBorder.Y - 1 {
+				printResult.WriteString("\n")
+			}
+		}
+	}
+
+	fmt.Println(printResult.String())
+	return printResult.String()
 }
